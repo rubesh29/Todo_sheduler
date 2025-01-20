@@ -73,12 +73,12 @@ Run the Application:
     Add user authentication for personalized task management.
     Host the app on a cloud service like Streamlit Cloud.
 
-🧑‍💻 Author
+🧑‍💻 Author:
 
     Rubesh P.
         LinkedIn
         GitHub
 
-📜 License
+📜 License:
 
 This project is open-source and available under the MIT License.

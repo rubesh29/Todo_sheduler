@@ -42,28 +42,30 @@ st.subheader("Current Tasks")
 if not st.session_state["tasks"]:
     st.write("No tasks available.")
 else:
+    delete_indices = []
+
     for index, task in enumerate(st.session_state["tasks"]):
         col1, col2, col3 = st.columns([6, 2, 2])
         with col1:
             st.write(f"{index + 1}. {'✅' if task['completed'] else '⬜'} {task['title']}")
         with col2:
             if not task["completed"]:
-                if st.button("Mark Done", key=f"done_{index}"):
+                if st.button("Mark Done", key=f"done_{task['title']}_{index}"):
                     st.session_state["tasks"][index]["completed"] = True
                     save_tasks(st.session_state["tasks"])
-                    st.success(f"Task '{task['title']}' marked as done!")
                     st.rerun()
         with col3:
-            if st.button("Delete", key=f"delete_{index}"):
-                removed_task = st.session_state["tasks"].pop(index)
-                save_tasks(st.session_state["tasks"])
-                st.success(f"Task '{removed_task['title']}' deleted!")
-                st.rerun()
+            if st.button("Delete", key=f"delete_{task['title']}_{index}"):
+                delete_indices.append(index)
+
+    # Perform deletions after iterating
+    for index in sorted(delete_indices, reverse=True):
+        removed_task = st.session_state["tasks"].pop(index)
+        save_tasks(st.session_state["tasks"])
+        st.success(f"Task '{removed_task['title']}' deleted!")
+        st.rerun()
 
 st.write("---")
 
-
-
 # Footer
 st.write("📁 Tasks are automatically saved to a file for persistence.")
-

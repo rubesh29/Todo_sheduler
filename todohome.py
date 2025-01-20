@@ -51,6 +51,7 @@ else:
                 if st.button("Mark Done", key=f"done_{index}"):
                     st.session_state["tasks"][index]["completed"] = True
                     save_tasks(st.session_state["tasks"])
+                    st.success(f"Task '{task['title']}' marked as done!")
                     st.rerun()
         with col3:
             if st.button("Delete", key=f"delete_{index}"):
@@ -60,6 +61,8 @@ else:
                 st.rerun()
 
 st.write("---")
+
+
 
 # Footer
 st.write("📁 Tasks are automatically saved to a file for persistence.")
